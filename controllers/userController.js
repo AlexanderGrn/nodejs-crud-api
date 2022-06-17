@@ -1,6 +1,6 @@
 //@ts-check
 
-import { findAll } from '../models/userModel.js';
+import { findAll, findUser } from '../models/userModel.js';
 
 async function getUsers(request, response) {
     try {
@@ -12,6 +12,22 @@ async function getUsers(request, response) {
     }
 }
 
+async function getUser(request, response, userId) {
+    try {
+        const user = await findUser(userId);
+        if (!user) {
+            response.writeHead(404, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify({ message: "User not found" }));
+        } else {
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify(user));
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
-    getUsers
+    getUsers,
+    getUser
 }

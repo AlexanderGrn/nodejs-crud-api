@@ -30,6 +30,14 @@ function findAll() {
     });
 }
 
+function findUser(id) {
+    return new Promise((resolve, reject) => {
+        const user = users.find(obj => obj.id == id);
+        resolve(user);
+    });
+}
+
 export {
-    findAll
+    findAll,
+    findUser
 }
