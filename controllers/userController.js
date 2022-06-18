@@ -1,6 +1,10 @@
 //@ts-check
 
-import { findAll, findUser } from '../models/userModel.js';
+import {
+    findAll,
+    findUser,
+    createNewUser
+} from '../models/userModel.js';
 
 async function getUsers(request, response) {
     try {
@@ -27,7 +31,33 @@ async function getUser(request, response, userId) {
     }
 }
 
+async function createUser(request, response) {
+    try {
+        let body = "";
+
+        request.on('data', (chunk) => {
+            body += chunk.toString();
+        })
+
+        request.on('end', async () => {
+            const { username, age, hobbies } = JSON.parse(body);
+            const user = {
+                username,
+                age,
+                hobbies
+            }
+            const newUser = await createNewUser(user);
+            response.writeHead(201, { 'Content-Type': 'application/json' });
+            return response.end(JSON.stringify(newUser));
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     getUsers,
-    getUser
+    getUser,
+    createUser
 }

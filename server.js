@@ -1,7 +1,11 @@
 //@ts-check
 
 import http from 'http';
-import { getUsers, getUser } from './controllers/userController.js';
+import {
+    getUsers,
+    getUser,
+    createUser
+} from './controllers/userController.js';
 
 // const users = [
 //     {
@@ -39,6 +43,9 @@ const server = http.createServer((request, response) => {
     } else if (request.url.match(/\/api\/users\/([0-9]+)/) && request.method === 'GET') {
         const userId = request.url.split('/')[3];
         getUser(request, response, userId);
+
+    } else if (request.url === '/api/users' && request.method === 'POST') {
+        createUser(request, response);
 
     } else {
         response.writeHead(404, { 'Content-Type': 'application/json' });

@@ -1,5 +1,7 @@
 //@ts-check
 
+import { v4 as uuidv4 } from 'uuid';
+
 const users = [
     {
         id: 1,
@@ -30,14 +32,23 @@ function findAll() {
     });
 }
 
-function findUser(id) {
+function findUser(userId) {
     return new Promise((resolve, reject) => {
-        const user = users.find(obj => obj.id == id);
+        const user = users.find(obj => obj.id == userId);
         resolve(user);
+    });
+}
+
+function createNewUser(user) {
+    return new Promise((resolve, reject) => {
+        const newUser = { id: uuidv4(), ...user };
+        users.push(newUser);
+        resolve(newUser);
     });
 }
 
 export {
     findAll,
-    findUser
+    findUser,
+    createNewUser
 }
