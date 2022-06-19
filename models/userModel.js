@@ -4,21 +4,21 @@ import { v4 as uuidv4 } from 'uuid';
 
 const users = [
     {
-        id: 1,
+        id: '1',
         username: 'Aaa',
         age: 21,
         hobbies: []
 
     },
     {
-        id: 2,
+        id: '2',
         username: 'Bbb',
         age: 25,
         hobbies: ['sport', 'dancing']
 
     },
     {
-        id: 3,
+        id: '3',
         username: 'Ccc',
         age: 35,
         hobbies: ['fishing', 'cooking']
