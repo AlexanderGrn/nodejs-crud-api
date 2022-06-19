@@ -61,7 +61,7 @@ async function createUser(request, response) {
         });
 
     } catch (err) {
-        console.log(err);
+        console.log("POST Error");
     }
 }
 
@@ -84,7 +84,7 @@ async function updateUser(request, response, userId) {
                 const userData = {
                     id: userId,
                     username: username || user.username,
-                    age: age || user.username,
+                    age: age || user.age,
                     hobbies: hobbies || user.hobbies
                 }
                 const updatedUser = await updUser(userId, userData);
