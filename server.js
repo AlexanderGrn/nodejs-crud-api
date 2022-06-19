@@ -6,37 +6,10 @@ import {
     getUsers,
     getUser,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 } from './controllers/userController.js';
 
-// const users = [
-//     {
-//         id: 1,
-//         username: 'Aaa',
-//         age: 21,
-//         hobbies: []
-
-//     },
-//     {
-//         id: 2,
-//         username: 'Bbb',
-//         age: 25,
-//         hobbies: ['sport', 'dancing']
-
-//     },
-//     {
-//         id: 3,
-//         username: 'Ccc',
-//         age: 35,
-//         hobbies: ['fishing', 'cooking']
-
-//     }
-// ];
-
-// const errors = {
-//     '404': 'Rout not found',
-//     '500': 'Server side error'
-// };
 
 const server = http.createServer((request, response) => {
     try {
@@ -48,11 +21,15 @@ const server = http.createServer((request, response) => {
             getUser(request, response, userId);
 
         } else if (request.url === '/api/users' && request.method === 'POST') {
-            reateUser(request, response);
+            createUser(request, response);
 
         } else if (request.url.match(/\/api\/users\/([0-9]+)/) && request.method === 'PUT') {
             const userId = request.url.split('/')[3];
             updateUser(request, response, userId);
+
+        } else if (request.url.match(/\/api\/users\/([0-9]+)/) && request.method === 'DELETE') {
+            const userId = request.url.split('/')[3];
+            deleteUser(request, response, userId);
 
         } else {
             response.writeHead(404, { 'Content-Type': 'application/json' });

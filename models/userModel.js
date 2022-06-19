@@ -50,9 +50,18 @@ function updUser(userId, userData) {
     });
 }
 
+function delUser(userId) {
+    return new Promise((resolve, reject) => {
+        const userIndex = users.findIndex(obj => obj.id == userId);
+        users.splice(userIndex, 1);
+        resolve();
+    });
+}
+
 export {
     findAll,
     findUser,
     createNewUser,
-    updUser
+    updUser,
+    delUser
 }

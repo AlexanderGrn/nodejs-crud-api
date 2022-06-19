@@ -1,10 +1,13 @@
 //@ts-check
 
+import { validate as uuidValidate } from 'uuid';
+
 import {
     findAll,
     findUser,
     createNewUser,
-    updUser
+    updUser,
+    delUser
 } from '../models/userModel.js';
 
 async function getUsers(request, response) {
@@ -20,7 +23,10 @@ async function getUsers(request, response) {
 async function getUser(request, response, userId) {
     try {
         const user = await findUser(userId);
-        if (!user) {
+        if (!(uuidValidate(userId))) {
+            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify({ message: "Invalid user ID" }));
+        } else if (!user) {
             response.writeHead(404, { 'Content-Type': 'application/json' });
             response.end(JSON.stringify({ message: "User not found" }));
         } else {
@@ -69,7 +75,10 @@ async function updateUser(request, response, userId) {
     try {
         const user = await findUser(userId);
 
-        if (!user) {
+        if (!(uuidValidate(userId))) {
+            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify({ message: "Invalid user ID" }));
+        } else if (!user) {
             response.writeHead(404, { 'Content-Type': 'application/json' });
             response.end(JSON.stringify({ message: "User not found" }));
         } else {
@@ -98,9 +107,30 @@ async function updateUser(request, response, userId) {
     }
 }
 
+async function deleteUser(request, response, userId) {
+    try {
+        const user = await findUser(userId);
+
+        if (!(uuidValidate(userId))) {
+            response.writeHead(400, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify({ message: "Invalid user ID" }));
+        } else if (!user) {
+            response.writeHead(404, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify({ message: "User not found" }));
+        } else {
+            await delUser(userId);
+            response.writeHead(204, { 'Content-Type': 'application/json' });
+            return response.end(JSON.stringify({ message: `User ${userId} deleted` }));
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     getUsers,
     getUser,
     createUser,
-    updateUser
+    updateUser,
+    deleteUser
 }
