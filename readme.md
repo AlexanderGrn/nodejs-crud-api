@@ -21,10 +21,10 @@ npm run start:dev
 In POSTMAN or THUNDER CLIENT use methods GET, POST, PUT, DELETE to get, create, update or delete `User` respectively.
 
  Users are stored as `objects` that have following properties:
-    - `id` — unique identifier (`string`, `uuid`) generated on server side;
-    - `username` — user's name (`string`, **required**);
-    - `age` — user's age (`number`, **required**);
-    - `hobbies` — user's hobbies (`array` of `strings` or empty `array`, **required**).
+- `id` — unique identifier (`string`, `uuid`) generated on server side;
+- `username` — user's name (`string`, **required**);
+- `age` — user's age (`number`, **required**);
+- `hobbies` — user's hobbies (`array` of `strings` or empty `array`, **required**).
 
 ## URL
 
