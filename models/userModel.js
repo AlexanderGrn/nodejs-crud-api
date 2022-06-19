@@ -3,27 +3,20 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const users = [
-    {
-        id: '1',
-        username: 'Aaa',
-        age: 21,
-        hobbies: []
+    // {
+    //     id: '1',
+    //     username: 'Aaa',
+    //     age: 21,
+    //     hobbies: []
 
-    },
-    {
-        id: '2',
-        username: 'Bbb',
-        age: 25,
-        hobbies: ['sport', 'dancing']
+    // },
+    // {
+    //     id: '2',
+    //     username: 'Bbb',
+    //     age: 25,
+    //     hobbies: ['sport', 'dancing']
 
-    },
-    {
-        id: '3',
-        username: 'Ccc',
-        age: 35,
-        hobbies: ['fishing', 'cooking']
-
-    }
+    // },
 ];
 
 function findAll() {
@@ -47,8 +40,19 @@ function createNewUser(user) {
     });
 }
 
+function updUser(userId, userData) {
+    return new Promise((resolve, reject) => {
+        const user = users.find(obj => obj.id == userId);
+        for (let key in user) {
+            user[key] = userData[key];
+        }
+        resolve(user);
+    });
+}
+
 export {
     findAll,
     findUser,
-    createNewUser
+    createNewUser,
+    updUser
 }

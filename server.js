@@ -5,7 +5,8 @@ import { } from 'dotenv/config';
 import {
     getUsers,
     getUser,
-    createUser
+    createUser,
+    updateUser
 } from './controllers/userController.js';
 
 // const users = [
@@ -47,6 +48,10 @@ const server = http.createServer((request, response) => {
 
     } else if (request.url === '/api/users' && request.method === 'POST') {
         createUser(request, response);
+
+    } else if (request.url.match(/\/api\/users\/([0-9]+)/) && request.method === 'PUT') {
+        const userId = request.url.split('/')[3];
+        updateUser(request, response, userId);
 
     } else {
         response.writeHead(404, { 'Content-Type': 'application/json' });

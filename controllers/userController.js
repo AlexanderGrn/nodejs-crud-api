@@ -3,7 +3,8 @@
 import {
     findAll,
     findUser,
-    createNewUser
+    createNewUser,
+    updUser
 } from '../models/userModel.js';
 
 async function getUsers(request, response) {
@@ -46,7 +47,7 @@ async function createUser(request, response) {
                 age,
                 hobbies
             }
-            // const newUser = await createNewUser(user);
+
             if (username
                 && age
                 && hobbies) {
@@ -64,8 +65,42 @@ async function createUser(request, response) {
     }
 }
 
+async function updateUser(request, response, userId) {
+    try {
+        const user = await findUser(userId);
+
+        if (!user) {
+            response.writeHead(404, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify({ message: "User not found" }));
+        } else {
+            let body = "";
+
+            request.on('data', (chunk) => {
+                body += chunk.toString();
+            })
+
+            request.on('end', async () => {
+                const { username, age, hobbies } = JSON.parse(body);
+                const userData = {
+                    id: userId,
+                    username: username || user.username,
+                    age: age || user.username,
+                    hobbies: hobbies || user.hobbies
+                }
+                const updatedUser = await updUser(userId, userData);
+                response.writeHead(200, { 'Content-Type': 'application/json' });
+                return response.end(JSON.stringify(updatedUser));
+            });
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export {
     getUsers,
     getUser,
-    createUser
+    createUser,
+    updateUser
 }
