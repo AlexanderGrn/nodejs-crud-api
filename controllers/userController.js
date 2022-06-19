@@ -46,13 +46,15 @@ async function createUser(request, response) {
                 age,
                 hobbies
             }
-            const newUser = await createNewUser(user);
-            if (!(newUser.username == undefined)
-                && !(newUser.age == undefined)
-                && !(newUser.hobbies == undefined)) {
+            // const newUser = await createNewUser(user);
+            if (username
+                && age
+                && hobbies) {
+                const newUser = await createNewUser(user);
                 response.writeHead(201, { 'Content-Type': 'application/json' });
                 return response.end(JSON.stringify(newUser));
             } else {
+                response.writeHead(400, { 'Content-Type': 'application/json' });
                 return response.end(JSON.stringify({ message: "User do not have required property" }));
             }
         });
